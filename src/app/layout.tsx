@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import HeaderLayout from '@/components/headerLayout';
+
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
 import EmotionRegistry from '../emotion/registry';
@@ -25,14 +25,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html>
+    <html suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <EmotionRegistry>
-          <HeaderLayout />
-          {children}
-        </EmotionRegistry>
+        <EmotionRegistry>{children}</EmotionRegistry>
       </body>
     </html>
   );
