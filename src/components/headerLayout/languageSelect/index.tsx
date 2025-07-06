@@ -1,4 +1,5 @@
 'use client';
+import dynamic from 'next/dynamic';
 import { useState } from 'react';
 import {
   FormControl,
@@ -7,7 +8,7 @@ import {
   SelectChangeEvent,
 } from '@mui/material';
 
-export default function LanguageSelect() {
+function LanguageSelect() {
   const [language, setLanguage] = useState('zh');
 
   const handleChange = (event: SelectChangeEvent) => {
@@ -29,3 +30,10 @@ export default function LanguageSelect() {
     </FormControl>
   );
 }
+
+// 延後載入語言選單元件，避免初始 render 出錯破圖
+const DynamicLanguageSelect = dynamic(() => Promise.resolve(LanguageSelect), {
+  ssr: false,
+});
+
+export default DynamicLanguageSelect;
