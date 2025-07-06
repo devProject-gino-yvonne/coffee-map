@@ -1,18 +1,19 @@
+import LanguageSelect from './languageSelect';
+import LoginComponent from './loginComponent';
 import LogoComponent from './logoComponent';
-import PersonIcon from '@mui/icons-material/Person';
+import MemberMenu from './memberMenu';
 
 export default function HeaderLayout() {
   return (
-    <div className="flex flex-col min-h-screen">
-      <header className="bg-[#f6efe7] text-black h-16">
-        <div className="h-full mx-7 flex items-center  justify-between">
-          <LogoComponent />
-          <div className="flex items-center gap-4">
-            <div className="cursor-pointer">登入</div>
-            <PersonIcon className="text-2xl text-blue-50" />
-          </div>
+    <header className="bg-[#f6efe7] text-black h-16 shadow-md">
+      <div className="h-full mx-7 flex items-center  justify-between">
+        <LogoComponent />
+        <div className="flex items-center gap-4">
+          <LoginComponent />
+          <LanguageSelect />
+          <MemberMenu />
         </div>
-      </header>
-    </div>
+      </div>
+    </header>
   );
 }
