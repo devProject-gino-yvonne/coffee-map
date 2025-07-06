@@ -2,7 +2,7 @@ import LoginPage from '@/components/loginPage';
 export default function Login() {
   return (
     <div className="flex flex-col items-center justify-center p-20">
-      <h1 className="text-2xl font-bold pb-4">會員登入</h1>
+      <h1 className="text-2xl font-bold pb-4 text-[#5a3d1b]">會員登入</h1>
       <LoginPage />
     </div>
   );
