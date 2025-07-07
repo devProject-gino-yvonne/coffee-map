@@ -3,6 +3,10 @@
     "login": "登入"
   },
   "LoginPage": {
-    "title": "登入"
+    "title": "登入",
+    "accountLabel": "帳號",
+    "passwordLabel": "密碼",
+    "forgetPassword": "忘記密碼",
+    "loginButton": "登入"
   }
 }

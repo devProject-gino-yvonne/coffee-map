@@ -3,6 +3,10 @@
     "login": "Login"
   },
   "LoginPage": {
-    "title": "Login"
+    "title": "Login",
+    "accountLabel": "Account",
+    "passwordLabel": "Password",
+    "forgetPassword": "Forgot Password",
+    "loginButton": "Login"
   }
 }
