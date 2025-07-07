@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import * as z from 'zod/v4';
 import { FormControl, TextField, Button } from '@mui/material';
+import { useTranslations } from 'next-intl';
 
 const LoginSchema = z.object({
   account: z.email('請輸入正確的電子信箱').min(1, '帳號為必填'),
@@ -22,6 +23,8 @@ export default function LoginPage() {
   const [errorMSGs, setErrorMSGs] = useState<
     Partial<Record<keyof LoginForm, string>>
   >({});
+
+  const t = useTranslations('LoginPage');
 
   const handleChange =
     (field: keyof LoginForm) => (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -53,7 +56,7 @@ export default function LoginPage() {
           <TextField
             required
             id="account"
-            label="帳號"
+            label={t('accountLabel')}
             variant="outlined"
             value={loginFormData.account}
             error={!!errorMSGs.account}
@@ -63,7 +66,7 @@ export default function LoginPage() {
           <TextField
             required
             id="password"
-            label="密碼"
+            label={t('passwordLabel')}
             type="password"
             variant="outlined"
             value={loginFormData.password}
@@ -77,7 +80,7 @@ export default function LoginPage() {
             onClick={() => forgetPassword()}
             className="text-xs text-gray-500 hover:underline cursor-pointer"
           >
-            忘記密碼
+            {t('forgetPassword')}
           </p>
         </div>
         <Button
@@ -86,7 +89,7 @@ export default function LoginPage() {
           variant="contained"
           color="secondary"
         >
-          登入
+          {t('loginButton')}
         </Button>
       </FormControl>
     </form>
