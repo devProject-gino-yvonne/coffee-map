@@ -1,0 +1,12 @@
+{
+  "HeaderLayout": {
+    "login": "Login"
+  },
+  "LoginPage": {
+    "title": "Login",
+    "accountLabel": "Account",
+    "passwordLabel": "Password",
+    "forgetPassword": "Forgot Password",
+    "loginButton": "Login"
+  }
+}
