@@ -1,10 +1,14 @@
-import { z } from 'zod/v4';
-import { useTranslations } from 'next-intl';
-const createLoginSchema = (t: ReturnType<typeof useTranslations>) => {
-  return z.object({
-    account: z.email(t('errorMSG.email.format')).min(1, t('required')),
-    password: z.string().min(1, t('required')), //TODO:密碼驗證格式待確認
-  });
+type typeResponseDataSuccess<T> = { status: 200; data: T };
+
+type typeResponseDataFailed<T> = { status: number; data: T };
+
+type typeLoginData = {
+  account: string;
+  password: string;
 };
 
-export { createLoginSchema };
+type typeLoginResponse<T> =
+  | typeResponseDataSuccess<T>
+  | typeResponseDataFailed<T>;
+
+export type { typeLoginData, typeLoginResponse };

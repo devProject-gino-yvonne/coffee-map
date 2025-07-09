@@ -3,8 +3,8 @@ import { useState } from 'react';
 import { FormControl, TextField, Button } from '@mui/material';
 import { z } from 'zod/v4';
 import { useTranslations } from 'next-intl';
-import { createLoginSchema } from '@/type';
-
+import { createLoginSchema } from '@/lib/formValidation';
+import { fetchLoginData } from '@/lib/api/user';
 export default function LoginPage() {
   const t = useTranslations('LoginPage');
   const LoginSchema = createLoginSchema(t);
@@ -40,6 +40,11 @@ export default function LoginPage() {
     }
 
     //TODO:送出登入資料的api
+    const isLoginValid = fetchLoginData({
+      account: loginFormData.account,
+      password: loginFormData.password,
+    });
+    console.log('isLoginValid', isLoginValid);
   };
 
   const forgetPassword = () => {
