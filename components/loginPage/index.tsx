@@ -1,20 +1,15 @@
 'use client';
 import { useState } from 'react';
-import * as z from 'zod/v4';
 import { FormControl, TextField, Button } from '@mui/material';
+import { z } from 'zod/v4';
 import { useTranslations } from 'next-intl';
-
-const LoginSchema = z.object({
-  account: z.email('請輸入正確的電子信箱').min(1, '帳號為必填'),
-  password: z.string().min(1, '密碼為必填'), //TODO:密碼驗證格式待確認
-});
-type LoginForm = z.infer<typeof LoginSchema>;
-
-const forgetPassword = () => {
-  console.log('forget password clicked，準備開光箱');
-};
+import { createLoginSchema } from '@/type';
 
 export default function LoginPage() {
+  const t = useTranslations('LoginPage');
+  const LoginSchema = createLoginSchema(t);
+  type LoginForm = z.infer<typeof LoginSchema>;
+
   const [loginFormData, setLoginFormData] = useState<LoginForm>({
     account: '',
     password: '',
@@ -23,8 +18,6 @@ export default function LoginPage() {
   const [errorMSGs, setErrorMSGs] = useState<
     Partial<Record<keyof LoginForm, string>>
   >({});
-
-  const t = useTranslations('LoginPage');
 
   const handleChange =
     (field: keyof LoginForm) => (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -49,12 +42,15 @@ export default function LoginPage() {
     //TODO:送出登入資料的api
   };
 
+  const forgetPassword = () => {
+    console.log('forget password clicked，準備開光箱');
+  };
+
   return (
     <form onSubmit={handleSubmitLogin}>
       <FormControl className="flex flex-col gap-y-3">
         <div className="flex flex-col gap-y-3">
           <TextField
-            required
             id="account"
             label={t('accountLabel')}
             variant="outlined"
@@ -64,7 +60,6 @@ export default function LoginPage() {
             onChange={handleChange('account')}
           />
           <TextField
-            required
             id="password"
             label={t('passwordLabel')}
             type="password"

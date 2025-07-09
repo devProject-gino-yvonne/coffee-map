@@ -1,44 +1,51 @@
 import { PrismaClient, Prisma } from '../app/generated/prisma';
+import bcrypt from 'bcrypt';
 
 const prisma = new PrismaClient();
 
-const userData: Prisma.UserCreateInput[] = [
+const rawUserData = [
   {
-    name: 'Alice',
-    email: 'alice@prisma.io',
-    posts: {
-      create: [
-        {
-          title: 'Join the Prisma Discord',
-          content: 'https://pris.ly/discord',
-          published: true,
-        },
-        {
-          title: 'Prisma on YouTube',
-          content: 'https://pris.ly/youtube',
-        },
-      ],
-    },
+    name: 'YuAn',
+    email: 'YuA@coffeemap.com',
+    password: '123456',
+    role: 'admin',
   },
   {
-    name: 'Bob',
-    email: 'bob@prisma.io',
-    posts: {
-      create: [
-        {
-          title: 'Follow Prisma on Twitter',
-          content: 'https://www.twitter.com/prisma',
-          published: true,
-        },
-      ],
-    },
+    name: 'Gino',
+    email: 'Gino@coffeemap.com',
+    password: '123456',
+    role: 'admin',
   },
 ];
 
+// 用 bcrypt 加密所有密碼
+async function hashUserData(
+  data: typeof rawUserData
+): Promise<Prisma.UserCreateInput[]> {
+  return Promise.all(
+    data.map(async u => ({
+      ...u,
+      password: await bcrypt.hash(u.password, 10),
+    }))
+  );
+}
+
 export async function main() {
+  const userData = await hashUserData(rawUserData);
+
   for (const u of userData) {
-    await prisma.user.create({ data: u });
+    await prisma.user.upsert({
+      where: { email: u.email },
+      update: {},
+      create: u,
+    });
   }
 }
 
-main();
+main()
+  .then(() => prisma.$disconnect())
+  .catch(e => {
+    console.error(e);
+    prisma.$disconnect();
+    process.exit(1);
+  });

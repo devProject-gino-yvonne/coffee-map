@@ -6,13 +6,11 @@ import Link from 'next/link';
 export default function LoginComponent() {
   const params = useParams();
   const lang = params.lang || 'zh';
-  const t = useTranslations();
-
-  console.log('t:', t('HeaderLayout.login'));
+  const t = useTranslations('HeaderLayout');
 
   return (
     <Link className="cursor-pointer" href={`/${lang}/login`}>
-      {t('HeaderLayout.login')}
+      {t('login')}
     </Link>
   );
 }
